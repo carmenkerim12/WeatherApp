@@ -13,6 +13,7 @@ public class Forecast {
     private float id;
     private ArrayList<Weather> weather;
     private String name;
+    private Main main;
     private Sys sys;
 
     public Forecast(float id, ArrayList<Weather> weather, String name, Sys sys) {
@@ -30,5 +31,13 @@ public class Forecast {
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<Weather> getWeather() {
+        return weather;
+    }
+
+    public Main getMain() {
+        return main;
     }
 }
