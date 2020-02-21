@@ -1,18 +1,42 @@
 package com.example.weatherapp.CurrentWeatherScreen.presenter;
 
+import android.util.Log;
+
 import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherContract;
 import com.example.weatherapp.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherDataProvider;
 import com.example.weatherapp.repository.WeatherRepository;
 
+import static com.example.weatherapp.LocationHelper.TAG;
+
 public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter {
     private CurrentWeatherContract.View view;
     private WeatherRepository weatherRepository;
+    private LocationHelper locationHelper;
 
-    public CurrentWeatherPresenter(CurrentWeatherContract.View view, WeatherRepository weatherRepository) {
+    public CurrentWeatherPresenter(CurrentWeatherContract.View view, WeatherRepository weatherRepository, LocationHelper locationHelper) {
         this.view = view;
         this.weatherRepository = weatherRepository;
+        this.locationHelper = locationHelper;
+    }
+
+    @Override
+    public void getUsersLocation() {
+        view.weatherLoading();
+
+        locationHelper.getUsersLastLocation(location -> {
+            if (location != null) {
+                LocationHelper.setUsersLocation(location.getLongitude(), location.getLatitude());
+
+                // once we get the callback and set the location, we then want to make a call to get
+                // the users weather
+                getUsersWeather();
+
+                Log.i(TAG, "onSuccess: " + location.getLongitude());
+                Log.i(TAG, "onSuccess: " + location.getLatitude());
+            }
+        });
     }
 
     @Override
@@ -37,7 +61,7 @@ public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter
 
     @Override
     public void onViewCreated() {
-
+        getUsersLocation();
     }
 
     @Override

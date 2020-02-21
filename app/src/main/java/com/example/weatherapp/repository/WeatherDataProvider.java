@@ -36,7 +36,10 @@ public class WeatherDataProvider {
      * @param networkResponse - our listener to communicate to the UI
      */
     public void getCurrentWeather(final double lat, final double lon, final NetworkResponse networkResponse) {
-        final String url = BASE_URL + "lat=" + lat + "&lon=" + lon + "&appid=" + WEATHER_API_KEY;
+        final String url = BASE_URL + "lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + WEATHER_API_KEY;
+
+
+        Applog.d(TAG, url);
 
         // initially loading to communicate to the user with a spinner/snackbar
         networkResponse.onLoading();
@@ -46,7 +49,7 @@ public class WeatherDataProvider {
                 response -> {
                     // right now we have the json request we need to convert to our Forecast object
                     final Forecast forecast = gson.fromJson(response.toString(), Forecast.class);
-                    Applog.e(TAG, forecast.toString());
+                    Applog.i(TAG, gson.toJson(forecast));
 
                     // we call onSuccess here to let our UI know everything succeeded
                     networkResponse.onSuccess(forecast);

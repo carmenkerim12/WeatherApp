@@ -12,11 +12,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.weatherapp.CurrentWeatherScreen.presenter.CurrentWeatherPresenter;
+import com.example.weatherapp.LocationHelper;
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherRepository;
 
 public class CurrentWeatherFragment extends Fragment implements CurrentWeatherContract.View {
+    private static final String TAG = CurrentWeatherFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
 
     private TextView cityNameTV;
@@ -45,10 +47,10 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
         progressBar = view.findViewById(R.id.progress_bar);
 
         if (getActivity() != null) {
-            setPresenter(new CurrentWeatherPresenter(this, new WeatherRepository(getActivity().getApplicationContext())));
+            setPresenter(new CurrentWeatherPresenter(this, new WeatherRepository(getActivity().getApplicationContext()), new LocationHelper(getActivity())));
         }
 
-        currentWeatherPresenter.getUsersWeather();
+        currentWeatherPresenter.onViewCreated();
 
         return view;
     }
@@ -89,7 +91,7 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
         setTemp(forecast.getMain().getTemp() + "");
     }
 
-    public void determineContentVisibility(){
+    public void determineContentVisibility() {
         cityNameTV.setVisibility(View.VISIBLE);
         weatherDescriptionTV.setVisibility(View.VISIBLE);
         tempTV.setVisibility(View.VISIBLE);

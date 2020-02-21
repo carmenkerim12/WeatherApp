@@ -3,6 +3,7 @@ package com.example.weatherapp;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class LocationHelper {
     public static String TAG = LocationHelper.class.getSimpleName();
@@ -31,22 +33,13 @@ public class LocationHelper {
      * this method will get the users last known location if the permissions have been set. Otherwise,
      * we will requestPermission
      */
-    void getUsersLastLocation() {
+    public void getUsersLastLocation(OnSuccessListener<Location> onSuccessListener) {
         // check permission
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionForLocation();
         } else {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-                if (location != null) {
-                    setUsersLocation(location.getLongitude(), location.getLatitude());
-
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherFragment()).commit();
-
-                    Log.i(TAG, "onSuccess: " + location.getLongitude());
-                    Log.i(TAG, "onSuccess: " + location.getLatitude());
-                }
-            });
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(onSuccessListener);
         }
     }
 

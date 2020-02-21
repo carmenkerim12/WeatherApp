@@ -6,6 +6,7 @@ import com.example.weatherapp.model.Forecast;
 
 public interface CurrentWeatherContract {
     interface Presenter extends BasePresenter {
+        void getUsersLocation();
         void getUsersWeather();
     }
 

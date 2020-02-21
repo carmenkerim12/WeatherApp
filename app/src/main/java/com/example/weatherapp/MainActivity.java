@@ -8,9 +8,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherFragment;
-import com.example.weatherapp.utils.Applog;
 
 import static com.example.weatherapp.LocationHelper.LOCATION_REQUEST_CODE;
 
@@ -25,10 +25,23 @@ public class MainActivity extends AppCompatActivity implements CurrentWeatherFra
 
         locationHelper = new LocationHelper(this);
 
-        // get users location
-        locationHelper.getUsersLastLocation();
+        if (savedInstanceState == null) {
+            // we check if we don't have permissions,
+            // if we don't then we will request it otherwise lets navigate
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                locationHelper.requestPermissionForLocation();
+            } else {
+                navigateToCurrentWeatherScreen();
+            }
+        }
+    }
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherFragment()).commit();
+    /**
+     * used to navigate to our main screen
+     */
+    public void navigateToCurrentWeatherScreen() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherFragment()).commit();
     }
 
     @Override
@@ -45,17 +58,7 @@ public class MainActivity extends AppCompatActivity implements CurrentWeatherFra
                         return;
                     }
                 }
-
-                // when user grants permission, we will call on get last location
-                locationHelper.getFusedLocationProviderClient().getLastLocation().addOnSuccessListener(this, location -> {
-                    // it is known for location to be null at times. Safe to check
-                    if (location != null) {
-                        LocationHelper.setUsersLocation(location.getLongitude(), location.getLatitude());
-
-                        Applog.i("CARMEN: lon", location.getLongitude() + "");
-                        Applog.i("CARMEN: lat", location.getLatitude() + "");
-                    }
-                });
+                navigateToCurrentWeatherScreen();
             }
         }
     }
