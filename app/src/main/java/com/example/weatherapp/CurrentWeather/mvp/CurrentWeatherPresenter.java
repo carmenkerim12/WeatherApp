@@ -1,8 +1,7 @@
-package com.example.weatherapp.CurrentWeatherScreen.presenter;
+package com.example.weatherapp.CurrentWeather.mvp;
 
 import android.util.Log;
 
-import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherContract;
 import com.example.weatherapp.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherDataProvider;

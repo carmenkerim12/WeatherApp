@@ -36,7 +36,7 @@ public class WeatherDataProvider {
      * @param networkResponse - our listener to communicate to the UI
      */
     public void getCurrentWeather(final double lat, final double lon, final NetworkResponse networkResponse) {
-        final String url = BASE_URL + "lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + WEATHER_API_KEY;
+        final String url = BASE_URL + "lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + WEATHER_API_KEY;
 
 
         Applog.d(TAG, url);

@@ -2,13 +2,15 @@ package com.example.weatherapp;
 
 import android.content.Context;
 
-import com.android.volley.NetworkResponse;
+import com.example.weatherapp.model.Forecast;
+import com.example.weatherapp.repository.WeatherDataProvider;
 import com.example.weatherapp.repository.WeatherRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -24,13 +26,19 @@ public class NetworkRequestTest {
     Context context;
 
     @Mock
-    NetworkResponse networkResponse;
+    WeatherDataProvider.NetworkResponse networkResponse;
 
     WeatherRepository weatherRepository;
 
+    @Mock
+    WeatherDataProvider weatherDataProvider;
+
+    @Mock
+    Forecast forecast;
+
     @Before
     public void init(){
-
+        weatherRepository = new WeatherRepository(weatherDataProvider);
     }
 
     @Test

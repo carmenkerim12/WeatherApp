@@ -1,4 +1,4 @@
-package com.example.weatherapp.CurrentWeatherScreen;
+package com.example.weatherapp.CurrentWeather.mvp;
 
 import com.example.weatherapp.BasePresenter;
 import com.example.weatherapp.BaseView;
@@ -22,5 +22,6 @@ public interface CurrentWeatherContract {
         void weatherLoaded(Forecast forecast);
 
         void weatherError(String error);
+        
     }
 }
