@@ -9,12 +9,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherScreen;
+import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherFragment;
 import com.example.weatherapp.utils.Applog;
 
 import static com.example.weatherapp.LocationHelper.LOCATION_REQUEST_CODE;
 
-public class MainActivity extends AppCompatActivity implements CurrentWeatherScreen.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements CurrentWeatherFragment.OnFragmentInteractionListener {
     // location helper used to help us with getting the users location
     LocationHelper locationHelper;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements CurrentWeatherScr
         // get users location
         locationHelper.getUsersLastLocation();
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherScreen()).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherFragment()).commit();
     }
 
     @Override

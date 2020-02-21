@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherScreen;
+import com.example.weatherapp.CurrentWeatherScreen.CurrentWeatherFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -41,7 +41,7 @@ public class LocationHelper {
                 if (location != null) {
                     setUsersLocation(location.getLongitude(), location.getLatitude());
 
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherScreen()).commit();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, new CurrentWeatherFragment()).commit();
 
                     Log.i(TAG, "onSuccess: " + location.getLongitude());
                     Log.i(TAG, "onSuccess: " + location.getLatitude());
