@@ -36,13 +36,14 @@ public class FiveDayForecastPresenter implements FiveDayForecastContract.Present
     @Override
     public void onBindRowView(FiveDayForecastRowView row, int position) {
         final FiveDayForecast fiveDayForecast = WeatherRepository.getFiveDayForecast();
+        final String ID_KEY = "id";
 
         // icon
         final String iconId = fiveDayForecast.getForecastList().get(position).getWeather().get(0).getIcon();
-        final String url = "http://openweathermap.org/img/wn/{{id}}@2x.png";
+        final String url = "http://openweathermap.org/img/wn/{{" + ID_KEY + "}}@2x.png";
 
         //image
-        row.setImage(url.replace("{{id}}", iconId));
+        row.setImage(url.replace("{{" + ID_KEY + "}}", iconId));
 
         row.setDate(fiveDayForecast.getForecastList().get(position).getDate());
 

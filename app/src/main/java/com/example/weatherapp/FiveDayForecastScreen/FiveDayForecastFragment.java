@@ -61,14 +61,14 @@ public class FiveDayForecastFragment extends Fragment implements FiveDayForecast
     @Override
     public void weatherLoading() {
         toggleProgressBar(false);
-        toggleRecyclerView(true);
+        toggleRecyclerViewVisibility(true);
     }
 
     @Override
     public void weatherLoaded() {
         notifyAdapter();
         toggleProgressBar(true);
-        toggleRecyclerView(false);
+        toggleRecyclerViewVisibility(false);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class FiveDayForecastFragment extends Fragment implements FiveDayForecast
     }
 
     @Override
-    public void toggleRecyclerView(boolean isHidden) {
+    public void toggleRecyclerViewVisibility(boolean isHidden) {
         recyclerView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
