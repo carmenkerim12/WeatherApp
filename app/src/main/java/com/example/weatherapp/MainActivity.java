@@ -11,8 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.weatherapp.CurrentWeather.CurrentWeatherFragment;
+import com.example.weatherapp.helpers.LocationHelper;
 
-import static com.example.weatherapp.LocationHelper.LOCATION_REQUEST_CODE;
+import static com.example.weatherapp.helpers.LocationHelper.LOCATION_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity implements CurrentWeatherFragment.OnFragmentInteractionListener {
     // location helper used to help us with getting the users location

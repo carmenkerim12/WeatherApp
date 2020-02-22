@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.helpers;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,6 +12,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * this class is used to help provide with
+ *
+ * - finding the users location
+ * - requesting permission for location
+ * - storing and setting the users coords
+ */
 public class LocationHelper {
     public static String TAG = LocationHelper.class.getSimpleName();
     public static final int LOCATION_REQUEST_CODE = 1000;
@@ -56,9 +63,5 @@ public class LocationHelper {
     public static void setUsersLocation(double longitude, double latitude) {
         lon = longitude;
         lat = latitude;
-    }
-
-    public FusedLocationProviderClient getFusedLocationProviderClient() {
-        return fusedLocationProviderClient;
     }
 }

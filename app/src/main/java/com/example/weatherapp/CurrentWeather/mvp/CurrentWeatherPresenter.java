@@ -1,13 +1,17 @@
 package com.example.weatherapp.CurrentWeather.mvp;
 
-import android.util.Log;
-
-import com.example.weatherapp.LocationHelper;
+import com.example.weatherapp.helpers.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherDataProvider;
 import com.example.weatherapp.repository.WeatherRepository;
+import com.example.weatherapp.utils.Applog;
 
-import static com.example.weatherapp.LocationHelper.TAG;
+import static com.example.weatherapp.helpers.LocationHelper.TAG;
+
+/**
+ * this presenter is in associated with the {@link com.example.weatherapp.CurrentWeather.CurrentWeatherFragment}.
+ * In charge of all the logic
+ */
 
 public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter {
     private CurrentWeatherContract.View view;
@@ -30,17 +34,17 @@ public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter
 
                 // once we get the callback and set the location, we then want to make a call to get
                 // the users weather
-                getUsersWeather();
+                getCurrentWeather();
 
-                Log.i(TAG, "onSuccess: " + location.getLongitude());
-                Log.i(TAG, "onSuccess: " + location.getLatitude());
+                Applog.i(TAG, "onSuccess: " + location.getLongitude());
+                Applog.i(TAG, "onSuccess: " + location.getLatitude());
             }
         });
     }
 
     @Override
-    public void getUsersWeather() {
-        weatherRepository.getCurrentWeather(LocationHelper.lat, LocationHelper.lon, new WeatherDataProvider.NetworkResponse() {
+    public void getCurrentWeather() {
+        weatherRepository.getCurrentWeather(LocationHelper.lat, LocationHelper.lon, new WeatherDataProvider.NetworkResponse<Forecast>() {
             @Override
             public void onLoading() {
                 view.weatherLoading();

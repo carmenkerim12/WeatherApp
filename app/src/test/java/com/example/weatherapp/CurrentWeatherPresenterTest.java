@@ -2,6 +2,7 @@ package com.example.weatherapp;
 
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherContract;
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherPresenter;
+import com.example.weatherapp.helpers.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherRepository;
 
