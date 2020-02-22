@@ -1,14 +1,11 @@
 package com.example.weatherapp;
 
-import android.location.Location;
-
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherContract;
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherPresenter;
 import com.example.weatherapp.helpers.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherDataProvider;
 import com.example.weatherapp.repository.WeatherRepository;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +17,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
+/**
+ * testing class for our CurrentWeatherPresenterTest
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CurrentWeatherPresenterTest {
     @Mock
@@ -40,25 +39,18 @@ public class CurrentWeatherPresenterTest {
     @Captor
     private ArgumentCaptor<WeatherDataProvider.NetworkResponse<Forecast>> networkResponseArgumentCaptor;
 
-    @Captor
-    private ArgumentCaptor<OnSuccessListener<Location>> onSuccessListenerArgumentCaptor;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         presenter = new CurrentWeatherPresenter(view, weatherRepository, locationHelper);
     }
 
-//    @Test
-//    public void getUsersLocation() {
-//        presenter.getUsersLocation();
-//        verify(view).weatherLoading();
-//        locationHelper.getUsersLastLocation(onSuccessListenerArgumentCaptor.capture());
-//        ArgumentCaptor<Location> location = ArgumentCaptor.forClass(Location.class);
-//    }
-
+    /**
+     * useful to check when we fetch the current weather during a successful use case.
+     * Our presenter should correspond correctly calling the correct views
+     */
     @Test
-    public void getCurrentWeather_WeatherLoaded() {
+    public void getCurrentWeather_WeatherLoadedSuccess() {
         presenter.getCurrentWeather();
         verify(weatherRepository).getCurrentWeather(Mockito.eq(LocationHelper.lat), Mockito.eq(LocationHelper.lon), networkResponseArgumentCaptor.capture());
         networkResponseArgumentCaptor.getValue().onLoading();
@@ -68,6 +60,10 @@ public class CurrentWeatherPresenterTest {
         verify(view).weatherLoaded(forecast);
     }
 
+    /**
+     * useful to check when we fetch the current weather during an alternative use case.
+     * Our presenter should correspond correctly calling the correct views
+     */
     @Test
     public void getCurrentWeather_WeatherError() {
         presenter.getCurrentWeather();

@@ -2,6 +2,7 @@ package com.example.weatherapp.FiveDayForecastScreen.mvp;
 
 import com.example.weatherapp.BasePresenter;
 import com.example.weatherapp.BaseView;
+import com.example.weatherapp.model.Forecast;
 
 public interface FiveDayForecastContract {
     interface Presenter extends BasePresenter {
@@ -14,9 +15,16 @@ public interface FiveDayForecastContract {
          * binds to the recyclerView row
          *
          * @param row
-         * @param position
+         * @param forecast
          */
-        void onBindRowView(FiveDayForecastRowView row, int position);
+        void onBindRowView(FiveDayForecastRowView row, Forecast forecast);
+
+        /**
+         * will replace {{id}} in api string with the icon id
+         *
+         * @param url
+         */
+        String setIconUrl(String url);
     }
 
     interface View extends BaseView<FiveDayForecastContract.Presenter> {
@@ -64,7 +72,7 @@ public interface FiveDayForecastContract {
          *
          * @param isHidden
          */
-        void toggleErrorMessage(boolean isHidden);
+        void toggleErrorMessageVisibility(boolean isHidden);
 
         /**
          * notifies datasetChange for the recyclerView

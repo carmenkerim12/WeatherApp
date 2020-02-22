@@ -25,24 +25,6 @@ public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter
     }
 
     @Override
-    public void getUsersLocation() {
-        view.weatherLoading();
-
-        locationHelper.getUsersLastLocation(location -> {
-            if (location != null) {
-                LocationHelper.setUsersLocation(location.getLongitude(), location.getLatitude());
-
-                // once we get the callback and set the location, we then want to make a call to get
-                // the users weather
-                getCurrentWeather();
-
-                Applog.i(TAG, "onSuccess: " + location.getLongitude());
-                Applog.i(TAG, "onSuccess: " + location.getLatitude());
-            }
-        });
-    }
-
-    @Override
     public void getCurrentWeather() {
         weatherRepository.getCurrentWeather(LocationHelper.lat, LocationHelper.lon, new WeatherDataProvider.NetworkResponse<Forecast>() {
             @Override
@@ -58,6 +40,24 @@ public class CurrentWeatherPresenter implements CurrentWeatherContract.Presenter
             @Override
             public void onError(String error) {
                 view.weatherError(error);
+            }
+        });
+    }
+
+    @Override
+    public void getUsersLocation() {
+        view.weatherLoading();
+
+        locationHelper.getUsersLastLocation(location -> {
+            if (location != null) {
+                LocationHelper.setUsersLocation(location.getLongitude(), location.getLatitude());
+
+                // once we get the callback and set the location, we then want to make a call to get
+                // the users weather
+                getCurrentWeather();
+
+                Applog.i(TAG, "onSuccess: " + location.getLongitude());
+                Applog.i(TAG, "onSuccess: " + location.getLatitude());
             }
         });
     }

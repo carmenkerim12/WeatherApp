@@ -10,6 +10,9 @@ package com.example.weatherapp.model;
 public class Sys {
     private String country;
 
+    public Sys() {
+    }
+
     public Sys(String country) {
         this.country = country;
     }

@@ -44,7 +44,7 @@ public class FiveDayForecastRecyclerView extends RecyclerView.Adapter<FiveDayFor
 
     @Override
     public void onBindViewHolder(@NonNull FiveDayForecastViewHolder holder, int position) {
-        presenter.onBindRowView(holder, position);
+        presenter.onBindRowView(holder, WeatherRepository.getFiveDayForecast().getForecastList().get(position));
     }
 
     @Override

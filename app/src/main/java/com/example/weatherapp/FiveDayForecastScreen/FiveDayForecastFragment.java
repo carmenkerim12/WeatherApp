@@ -77,7 +77,7 @@ public class FiveDayForecastFragment extends Fragment implements FiveDayForecast
             Toast.makeText(getActivity().getApplicationContext(), "There seems to be something wrong", Toast.LENGTH_SHORT).show();
         }
 
-        toggleErrorMessage(false);
+        toggleErrorMessageVisibility(false);
         toggleProgressBar(true);
     }
 
@@ -108,7 +108,7 @@ public class FiveDayForecastFragment extends Fragment implements FiveDayForecast
     }
 
     @Override
-    public void toggleErrorMessage(boolean isHidden) {
+    public void toggleErrorMessageVisibility(boolean isHidden) {
         errorMsgTV.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
