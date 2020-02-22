@@ -66,6 +66,11 @@ public class WeatherDataProvider {
         queue.add(request);
     }
 
+    /**
+     * will retrive the users five day forecast
+     *
+     * @param networkResponse - communication to our UI
+     */
     public void getFiveDayForecast(final NetworkResponse<FiveDayForecast> networkResponse) {
         final String url = BASE_URL + "forecast?lat=" + LocationHelper.lat + "&lon=" + LocationHelper.lon + "&units=imperial&appid=" + WEATHER_API_KEY;
 
@@ -78,6 +83,7 @@ public class WeatherDataProvider {
                     final FiveDayForecast fiveDayForecast = gson.fromJson(response.toString(), FiveDayForecast.class);
                     Applog.i(TAG, gson.toJson(fiveDayForecast));
 
+                    // setting the fiveDayForecast object to our static variable to access later
                     WeatherRepository.setFiveDayForecast(fiveDayForecast);
 
                     // we call onSuccess here to let our UI know everything succeeded
@@ -93,6 +99,11 @@ public class WeatherDataProvider {
         queue.add(request);
     }
 
+    /**
+     * our listener for any network response
+     *
+     * @param <T>
+     */
     public interface NetworkResponse<T> {
         void onLoading();
 
