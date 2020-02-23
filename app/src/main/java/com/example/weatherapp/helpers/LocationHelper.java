@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.weatherapp.MainActivity;
-import com.example.weatherapp.model.Coord;
 
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class LocationHelper {
     public static String TAG = LocationHelper.class.getSimpleName();
     public static final int LOCATION_REQUEST_CODE = 1000;
     private static final long INTERVAL_UPDATE = 5000;
-    public static Coord coord = new Coord(0, 0);
     public static double lon;
     public static double lat;
 
@@ -50,22 +48,22 @@ public class LocationHelper {
                 && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionForLocation();
         } else {
-            List<String> providers = locationManager.getProviders(true);
+            // request location updates
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, INTERVAL_UPDATE, INTERVAL_UPDATE, locationListener);
+
+            final List<String> providers = locationManager.getProviders(true);
             for (String provider : providers) {
-                Location l = locationManager.getLastKnownLocation(provider);
-                if (l == null) {
+                final Location location = locationManager.getLastKnownLocation(provider);
+                if (location == null) {
                     continue;
                 }
 
-                setUsersLocation(l.getLongitude(), l.getLatitude());
+                setUsersLocation(location.getLongitude(), location.getLatitude());
                 locationResponse.onSuccess();
                 return;
             }
 
             locationResponse.onError();
-
-            // request location updates
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, INTERVAL_UPDATE, INTERVAL_UPDATE, locationListener);
         }
     }
 
@@ -93,8 +91,6 @@ public class LocationHelper {
     public static void setUsersLocation(double longitude, double latitude) {
         lon = longitude;
         lat = latitude;
-        coord.setLat(latitude);
-        coord.setLon(longitude);
     }
 
     public interface LocationResponse {
