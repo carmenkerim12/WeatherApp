@@ -9,8 +9,8 @@ package com.example.weatherapp.model;
  * <p>
  */
 public class Coord {
-    private float lon;
-    private float lat;
+    private double lon;
+    private double lat;
 
     public Coord(float lon, float lat) {
         this.lon = lon;
@@ -19,11 +19,20 @@ public class Coord {
 
     // getter methods
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
+    }
+
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 }

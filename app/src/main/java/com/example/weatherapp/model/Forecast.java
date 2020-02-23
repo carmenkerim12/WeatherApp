@@ -1,5 +1,7 @@
 package com.example.weatherapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -13,13 +15,17 @@ public class Forecast {
     private float id;
     private ArrayList<Weather> weather;
     private String name;
-    private Sys sys;
+    private Main main;
+    @SerializedName("dt_txt")
+    private String date;
 
-    public Forecast(float id, ArrayList<Weather> weather, String name, Sys sys) {
+    public Forecast() {
+    }
+
+    public Forecast(float id, ArrayList<Weather> weather, String name, Main main) {
         this.id = id;
         this.weather = weather;
         this.name = name;
-        this.sys = sys;
     }
 
     // getter methods
@@ -30,5 +36,17 @@ public class Forecast {
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<Weather> getWeather() {
+        return weather;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

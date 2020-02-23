@@ -1,5 +1,7 @@
 package com.example.weatherapp.utils;
 
+import android.util.Log;
+
 import com.example.weatherapp.BuildConfig;
 
 public class Applog {
@@ -7,19 +9,19 @@ public class Applog {
 
     public static void e(String tag, String value) {
         if (isDebug) {
-            Applog.e(tag, value);
+            Log.e(tag, value);
         }
     }
 
     public static void d(String tag, String value) {
         if (isDebug) {
-            Applog.d(tag, value);
+            Log.d(tag, value);
         }
     }
 
     public static void i(String tag, String value) {
         if (isDebug) {
-            Applog.i(tag, value);
+            Log.i(tag, value);
         }
     }
 }
