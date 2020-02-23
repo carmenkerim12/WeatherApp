@@ -10,7 +10,7 @@ public class Utils {
      * @param context - needed to access the system service
      * @return - true if connected | false not connected
      */
-    private boolean isConnectedToNetwork(Context context) {
+    public static boolean isConnectedToNetwork(Context context) {
         final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }

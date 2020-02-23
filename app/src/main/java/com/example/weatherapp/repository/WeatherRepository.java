@@ -20,6 +20,7 @@ public class WeatherRepository {
 
     /**
      * used to communicate to our provider and get the users current weather
+     *
      * @param lat             - latitude of the user
      * @param lon             - longitude of the user
      * @param networkResponse - our listener to communicate to the UI
@@ -30,6 +31,7 @@ public class WeatherRepository {
 
     /**
      * used to communicate to our provider and get the users 5 day weather forecast
+     *
      * @param networkResponse
      */
     public void getFiveDayForecast(WeatherDataProvider.NetworkResponse<FiveDayForecast> networkResponse) {

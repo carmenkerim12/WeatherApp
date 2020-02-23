@@ -16,19 +16,16 @@ public class Forecast {
     private ArrayList<Weather> weather;
     private String name;
     private Main main;
-    private Sys sys;
     @SerializedName("dt_txt")
     private String date;
 
     public Forecast() {
     }
 
-    public Forecast(float id, ArrayList<Weather> weather, String name, Sys sys, Main main) {
+    public Forecast(float id, ArrayList<Weather> weather, String name, Main main) {
         this.id = id;
         this.weather = weather;
         this.name = name;
-        this.sys = sys;
-        this.main = new Main(12, 12, 12);
     }
 
     // getter methods

@@ -1,5 +1,7 @@
 package com.example.weatherapp.CurrentWeather;
 
+import android.app.AlertDialog;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,11 +17,13 @@ import androidx.fragment.app.Fragment;
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherContract;
 import com.example.weatherapp.CurrentWeather.mvp.CurrentWeatherPresenter;
 import com.example.weatherapp.FiveDayForecastScreen.FiveDayForecastFragment;
+import com.example.weatherapp.MainActivity;
 import com.example.weatherapp.R;
 import com.example.weatherapp.helpers.LocationHelper;
 import com.example.weatherapp.model.Forecast;
 import com.example.weatherapp.repository.WeatherDataProvider;
 import com.example.weatherapp.repository.WeatherRepository;
+import com.example.weatherapp.utils.Utils;
 
 /**
  * this fragment is used to
@@ -36,7 +40,7 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
     private TextView tempTV;
     private ProgressBar progressBar;
     private Button buttonFiveDayForecastBtn;
-
+    private LocationHelper locationHelper;
     private CurrentWeatherContract.Presenter currentWeatherPresenter;
 
     public CurrentWeatherFragment() {
@@ -59,9 +63,10 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
         buttonFiveDayForecastBtn = view.findViewById(R.id.five_day_btn);
 
         if (getActivity() != null) {
+            locationHelper = ((MainActivity) getActivity()).getLocationHelper();
             setPresenter(new CurrentWeatherPresenter(this,
                     new WeatherRepository(new WeatherDataProvider(getActivity().getApplicationContext())),
-                    new LocationHelper(getActivity())));
+                    locationHelper));
 
             // onViewCreated will take care of getting the users location and weather
             currentWeatherPresenter.onViewCreated();
@@ -70,6 +75,12 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
         buttonFiveDayForecastBtn.setOnClickListener(v -> onNavigateToFiveDayForecast());
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        currentWeatherPresenter.onDestroy();
     }
 
     @Override
@@ -88,7 +99,7 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
     @Override
     public void weatherError(String text) {
         if (getActivity() != null) {
-            Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -125,6 +136,11 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
     }
 
     @Override
+    public void locationError() {
+//        currentWeatherPresenter.getUsersLocation();
+    }
+
+    @Override
     public void onNavigateToFiveDayForecast() {
         // navigating to the five day forecast screen
         if (getActivity() != null) {
@@ -141,6 +157,12 @@ public class CurrentWeatherFragment extends Fragment implements CurrentWeatherCo
     @Override
     public void setPresenter(CurrentWeatherContract.Presenter presenter) {
         currentWeatherPresenter = presenter;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        currentWeatherPresenter.onStart();
     }
 
     public interface OnFragmentInteractionListener {

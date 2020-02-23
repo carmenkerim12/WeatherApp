@@ -22,6 +22,8 @@ public interface CurrentWeatherContract {
          * to get the current weather
          */
         void getCurrentWeather();
+
+        void onStart();
     }
 
     interface View extends BaseView<Presenter> {
@@ -76,8 +78,11 @@ public interface CurrentWeatherContract {
 
         /**
          * this is used to either hide content and shower progressBar or hide progressBar and show content
+         *
          * @param isWeatherLoading - whether we are still getting content and need to show the progressBar
          */
         void toggleContentVisibility(boolean isWeatherLoading);
+
+        void locationError();
     }
 }
